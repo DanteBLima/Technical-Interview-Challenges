@@ -1,21 +1,23 @@
 package com.challenge.domain.user;
 
 
+import com.challenge.dtos.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name = "users")
 @Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
@@ -35,5 +37,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+
+    public  User(UserDto data){
+        this.firstName = data.firstName();
+        this.lastNAme = data.lastName();
+        this.balance = data.balance();
+        this.document = data.document();
+        this.email = data.email();
+        this.password = data.password();
+        this.userType = data.userType();
+    }
 
 }

@@ -3,6 +3,7 @@ package com.example.loans.services;
 import com.example.loans.dtos.CustomerDto;
 import com.example.loans.dtos.LoanDto;
 import com.example.loans.dtos.LoanResponseDto;
+import com.example.loans.infra.DuplicateEntityException;
 import com.example.loans.repositories.CustomerRepository;
 import com.example.loans.users.Customer;
 import com.example.loans.users.Loan;
@@ -20,12 +21,12 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public LoanResponseDto createCostumer(CustomerDto data) throws Exception {
+    public LoanResponseDto createCostumer(CustomerDto data)  {
 
         Customer newCustomer = new Customer(data);
 
         if (customerRepository.existsByCpf(data.cpf())){
-            throw new Exception();
+            throw new DuplicateEntityException("User already exists");
         }
 
         List<LoanDto> availableLoansForUser = availableLoans(newCustomer);

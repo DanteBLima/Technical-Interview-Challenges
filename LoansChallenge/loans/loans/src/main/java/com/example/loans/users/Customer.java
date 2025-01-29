@@ -20,7 +20,9 @@ public class Customer {
     private String id;
 
     private int age;
+    @Column(unique = true)
     private String cpf;
+
     private String name;
     private String location;
     private BigDecimal income;
